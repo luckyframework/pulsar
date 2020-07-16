@@ -7,6 +7,12 @@ practice?
 You can define an event and any number of subscribers can subscribe to the
 event and do whatever they need with it.
 
+For example, in Lucky, we use Pulsar to create events for things like
+requests being processed, queries being made, before and after pipes running.
+Then we subscribe to these events to write to the logs. We also use this
+internally to log debugging information in an upcoming UI called Breeze that
+let's users debug development information.
+
 ## Example
 
 Let's say we're writing a library to charge a credit card and we may want to let
@@ -52,12 +58,6 @@ end
    ```
 
 2. Run `shards install`
-
-## Usage
-
-```crystal
-require "pulsar"
-```
 
 ## Contributing
 
