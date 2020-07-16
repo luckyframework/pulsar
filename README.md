@@ -53,7 +53,7 @@ You can also time how long it takes to run an event by inheriting from
 `Pulsar::TimedEvent`. You define them in the same way, but when you subscribe
 you must also accept a second argument:
 
-```
+```crystal
 class Database::QueryEvent < Pulsar::TimedEvent
 end
 
@@ -73,7 +73,7 @@ with any other Crystal class.
 
 For example, we can record the database query in the event from above
 
-```
+```crystal
 class Database::QueryEvent < Pulsar::TimedEvent
   getter :query
 
