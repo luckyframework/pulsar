@@ -66,6 +66,30 @@ Database::QueryEvent.new.publish do
 end
 ```
 
+### Add more information to the event
+
+To add more information to the event you can use `initialize` like you would
+with any other Crystal class.
+
+For example, we can record the database query in the event from above
+
+```
+class Database::QueryEvent < Pulsar::TimedEvent
+  getter :query
+
+  def initialize(@query : String)
+  end
+end
+
+Database::QueryEvent.subscribe do |event, duration|
+  puts event.query
+end
+
+Database::QueryEvent.new(query: "SELECT * FROM users").publish do
+  # Run a query, run some other code, etc.
+end
+```
+
 ## Installation
 
 1. Add the dependency to your `shard.yml`:
