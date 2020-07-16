@@ -16,7 +16,6 @@ describe Pulsar do
       called = true
       event.should be_a(Pulsar::TestEvent)
     end
-    called.should be_false
 
     Pulsar::TestEvent.new.publish
 
