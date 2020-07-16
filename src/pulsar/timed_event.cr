@@ -14,7 +14,7 @@ abstract class Pulsar::TimedEvent
     self.subscribers << block
   end
 
-  def instrument : Time::Span
+  def publish : Time::Span
     duration = Time.measure do
       yield
     end

@@ -36,7 +36,7 @@ describe Pulsar do
       event.should be_a(Pulsar::TestTimedEvent)
     end
 
-    duration = Pulsar::TestTimedEvent.new.instrument do
+    duration = Pulsar::TestTimedEvent.new.publish do
       # Nothing
     end
 
