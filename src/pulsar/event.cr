@@ -3,7 +3,6 @@ abstract class Pulsar::Event
 
   macro inherited
     @started_at : Time = Time.utc
-    @finished_at  : Time?
     class_property subscribers = [] of self -> Nil
   end
 
