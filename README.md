@@ -47,6 +47,25 @@ PaymentProcessor::ChargeCardEvent.subscribe do |event|
 end
 ```
 
+### Recording timing information
+
+You can also time how long it takes to run an event by inheriting from
+`Pulsar::TimedEvent`. You define them in the same way, but when you subscribe
+you must also accept a second argument:
+
+```
+class Database::QueryEvent < Pulsar::TimedEvent
+end
+
+Database::QueryEvent.subscribe do |event, duration|
+  # Do something with the event and duration
+end
+
+Database::QueryEvent.new.publish do
+  # Run a query, run some other code, etc.
+end
+```
+
 ## Installation
 
 1. Add the dependency to your `shard.yml`:
