@@ -36,11 +36,11 @@ describe Pulsar do
       event.should be_a(Pulsar::TestTimedEvent)
     end
 
-    duration = Pulsar::TestTimedEvent.new.publish do
-      # Nothing
+    result = Pulsar::TestTimedEvent.new.publish do
+      :return_me
     end
 
-    duration.should be_a(Time::Span)
+    result.should eq(:return_me)
     called.should be_true
   end
 end

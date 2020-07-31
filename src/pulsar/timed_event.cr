@@ -33,17 +33,17 @@ abstract class Pulsar::TimedEvent
   # end
   # ```
   #
-  # The `publish` method also returns the duration it took to run the block.
-  def publish : Time::Span
-    duration = Time.measure do
-      yield
-    end
+  # The `publish` method returns the result of the block.
+  def publish
+    start = Time.monotonic
+    result = yield
+    duration = Time.monotonic - start
 
     self.class.subscribers.each do |s|
       s.call(self, duration)
     end
 
-    duration
+    result
   end
 
   # Returns the name of the event.
