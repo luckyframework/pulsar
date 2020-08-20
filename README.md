@@ -90,6 +90,18 @@ Database::QueryEvent.new(query: "SELECT * FROM users").publish do
 end
 ```
 
+## `Pulsar.elapsed_text`
+
+Will return the time taken (`Time::Span`) as a human readable String.
+
+```crystal
+Database::QueryEvent.subscribe do |event, duration|
+  puts Pulsar.elaspted_text(duration) # "2.3ms"
+end
+```
+
+This method can be used with any `Time::Span`.
+
 ## Installation
 
 1. Add the dependency to your `shard.yml`:
