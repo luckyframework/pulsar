@@ -7,6 +7,15 @@ class Pulsar::TestTimedEvent < Pulsar::TimedEvent
 end
 
 describe Pulsar do
+  describe ".elapsed_text" do
+    it "formats time spans" do
+      Pulsar.elapsed_text(2.minutes).should eq("2.0m")
+      Pulsar.elapsed_text(59.seconds).should eq("59.0s")
+      Pulsar.elapsed_text(999.milliseconds).should eq("999.0ms")
+      Pulsar.elapsed_text(999.microseconds).should eq("999.0µs")
+    end
+  end
+
   describe "#name" do
     it "auto generates the name from the class" do
       Pulsar::TestEvent.new.name.should eq("Pulsar::TestEvent")
