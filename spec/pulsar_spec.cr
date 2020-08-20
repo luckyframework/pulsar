@@ -6,6 +6,11 @@ end
 class Pulsar::TestTimedEvent < Pulsar::TimedEvent
 end
 
+class Pulsar::EventWithInit < Pulsar::Event
+  def initialize(@something : String)
+  end
+end
+
 describe Pulsar do
   describe ".elapsed_text" do
     it "formats time spans" do
@@ -31,7 +36,18 @@ describe Pulsar do
       event.should be_a(Pulsar::TestEvent)
     end
 
-    Pulsar::TestEvent.new.publish
+    Pulsar::TestEvent.publish
+
+    called.should be_true
+  end
+
+  it "allows publishing with custom args" do
+    called = false
+    Pulsar::EventWithInit.subscribe do |event|
+      called = true
+    end
+
+    Pulsar::EventWithInit.publish(something: "foo")
 
     called.should be_true
   end
@@ -45,7 +61,7 @@ describe Pulsar do
       event.should be_a(Pulsar::TestTimedEvent)
     end
 
-    result = Pulsar::TestTimedEvent.new.publish do
+    result = Pulsar::TestTimedEvent.publish do
       :return_me
     end
 
