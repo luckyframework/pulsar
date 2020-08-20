@@ -14,7 +14,7 @@ abstract class Pulsar::TimedEvent
   #   # Do something with the event and duration
   # end
   #
-  # MyEvent.new.publish do
+  # MyEvent.publish do
   #   # Do something
   # end
   # ```
@@ -28,7 +28,7 @@ abstract class Pulsar::TimedEvent
   # it takes to run the block.
   #
   # ```crystal
-  # MyEvent.new.publish do
+  # MyEvent.publish do
   #   # Run some code
   # end
   # ```

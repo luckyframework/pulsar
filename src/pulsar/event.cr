@@ -14,7 +14,7 @@ abstract class Pulsar::Event
   #   puts event.name # "MyEvent"
   # end
   #
-  # MyEvent.new.publish # Will run the block above
+  # MyEvent.publish # Will run the block above
   # ```
   def self.subscribe(&block : self -> Nil)
     self.subscribers << block
@@ -23,7 +23,7 @@ abstract class Pulsar::Event
   # Publishes the event to all subscribers.
   #
   # ```crystal
-  # MyEvent.new.publish
+  # MyEvent.publish
   # ```
   #
   # ### Passing arguments to initialize
