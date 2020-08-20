@@ -25,7 +25,32 @@ abstract class Pulsar::Event
   # ```crystal
   # MyEvent.new.publish
   # ```
-  def publish
+  #
+  # ### Passing arguments to initialize
+  #
+  # If your event defines an `initialize` and requires arguments, you can
+  # pass those arguments to `publish`.
+  #
+  # For example if you had the event:
+  #
+  # ```crystal
+  # class MyEvent < Pulsar::Event
+  #   def initialize(custom_argument : String)
+  #   end
+  # end
+  # ```
+  #
+  # You would pass the arguments to `publish` and they will be used to
+  # initialize the event:
+  #
+  # ```crystal
+  # MyEvent.publish(custom_argument: "This is my custom event argument")
+  # ```
+  def self.publish(*args, **named_args)
+    new(*args, **named_args).publish
+  end
+
+  protected def publish
     self.class.subscribers.each do |s|
       s.call(self)
     end

@@ -31,7 +31,7 @@ class PaymentProcessor
     # Run code to charge the card...
 
     # Then fire an event
-    PaymentProcessor::ChargeCardEvent.new(amount).publish
+    PaymentProcessor::ChargeCardEvent.publish(amount)
   end
 end
 ```
@@ -61,7 +61,7 @@ Database::QueryEvent.subscribe do |event, duration|
   # Do something with the event and duration
 end
 
-Database::QueryEvent.new.publish do
+Database::QueryEvent.publish do
   # Run a query, run some other code, etc.
 end
 ```
@@ -85,7 +85,7 @@ Database::QueryEvent.subscribe do |event, duration|
   puts event.query
 end
 
-Database::QueryEvent.new(query: "SELECT * FROM users").publish do
+Database::QueryEvent.publish(query: "SELECT * FROM users") do
   # Run a query, run some other code, etc.
 end
 ```

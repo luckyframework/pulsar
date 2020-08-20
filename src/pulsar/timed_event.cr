@@ -34,7 +34,36 @@ abstract class Pulsar::TimedEvent
   # ```
   #
   # The `publish` method returns the result of the block.
-  def publish
+  #
+  # ### Passing arguments to initialize
+  #
+  # If your event defines an `initialize` and requires arguments, you can
+  # pass those arguments to `publish`.
+  #
+  # For example if you had the event:
+  #
+  # ```crystal
+  # class MyEvent < Pulsar::TimedEvent
+  #   def initialize(custom_argument : String)
+  #   end
+  # end
+  # ```
+  #
+  # You would pass the arguments to `publish` and they will be used to
+  # initialize the event:
+  #
+  # ```crystal
+  # MyEvent.publish(custom_argument: "This is my custom event argument") do
+  #   # ...run some code
+  # end
+  # ```
+  def self.publish(*args, **named_args)
+    new(*args, **named_args).publish do
+      yield
+    end
+  end
+
+  protected def publish
     start = Time.monotonic
     result = yield
     duration = Time.monotonic - start
