@@ -28,6 +28,13 @@ describe Pulsar do
     end
   end
 
+  describe "Pulsar::EVENT_TYPES" do
+    it "include Pulsar::Events and TimedEvents" do
+      Pulsar::EVENT_TYPES.should contain(Pulsar::TestEvent)
+      Pulsar::EVENT_TYPES.should contain(Pulsar::TestTimedEvent)
+    end
+  end
+
   it "allows subscribing and publishing events" do
     called = false
     Pulsar::TestEvent.subscribe do |event|
