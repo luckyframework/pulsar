@@ -90,9 +90,48 @@ Database::QueryEvent.publish(query: "SELECT * FROM users") do
 end
 ```
 
+## Testing
+
+If you want to test that events are published you can use Pulsar's built-in test mode.
+
+```crystal
+# Typically in spec/spec_helper.cr
+
+# Must come *after* `require "spec"`
+Pulsar.enable_test_mode!
+```
+
+This will enable an in-memory log for published events and will set up a hook to
+clear the events before each spec runs.
+
+You can access events using `{MyEventClass}.logged_events`.
+
+
+```crystal
+# Create an event
+class QueryEvent < Pulsar::TimedEvent
+  def initialize(@query : String)
+  end
+end
+
+# Method that will run the query and publish the event
+def run_my_query(query)
+  QueryEvent.publish(query: query) do
+    # Run the query somehow
+  end
+end
+
+it "publishes an event when a SQL query is executed" do
+  run_my_query "SELECT * FROM users
+
+  QueryEvent.logged_events.size.should eq(1)
+  QueryEvent.logged_events.first.query.should eq("SELECT * FROM users")
+end
+```
+
 ## `Pulsar.elapsed_text`
 
-Will return the time taken (`Time::Span`) as a human readable String.
+`Pulsar.elapsed_text` will return the time taken (`Time::Span`) as a human readable String.
 
 ```crystal
 Database::QueryEvent.subscribe do |event, duration|

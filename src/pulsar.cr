@@ -12,9 +12,8 @@ module Pulsar
   # method
   #
   # ```crystal
-  #
   # MyEvent.publish
-
+  #
   # MyEvent.logged_events.size.should eq(1)
   # MyEvent.logged_events.first # Returns the event that was published
   # ```
