@@ -7,20 +7,28 @@ class Pulsar::SpecEvent < Pulsar::Event
   end
 end
 
+class Pulsar::TimedSpecEvent < Pulsar::TimedEvent
+end
+
 describe "Pulsar test mode" do
   describe "in memory event log" do
-    # TODO: Test TimedEvent
     it "stores events if enabled" do
       Pulsar::SpecEvent.publish(custom_arg: "Test")
+      Pulsar::TimedSpecEvent.publish { :do_nothing }
 
       Pulsar::SpecEvent.logged_events.size.should eq(1)
       Pulsar::SpecEvent.logged_events.first.custom_arg.should eq("Test")
+      Pulsar::TimedSpecEvent.logged_events.size.should eq(1)
     end
 
     it "stores no events if disabled" do
       Pulsar.test_mode_enabled = false
+
       Pulsar::SpecEvent.publish(custom_arg: "Test")
+      Pulsar::TimedSpecEvent.publish { :do_nothing }
+
       Pulsar::SpecEvent.logged_events.size.should eq(0)
+      Pulsar::TimedSpecEvent.logged_events.size.should eq(0)
     end
   end
 

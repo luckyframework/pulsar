@@ -35,6 +35,13 @@ module Pulsar
     end
   end
 
+  # :nodoc:
+  def self.maybe_log_event(event : Pulsar::Event | Pulsar::TimedEvent)
+    if Pulsar.test_mode_enabled?
+      event.class.logged_events.push(event)
+    end
+  end
+
   # Will return the time taken (`Time::Span`) as a human readable `String`.
   #
   # ```crystal

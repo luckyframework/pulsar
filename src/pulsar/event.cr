@@ -51,9 +51,7 @@ abstract class Pulsar::Event < Pulsar::BaseEvent
   end
 
   protected def publish
-    if Pulsar.test_mode_enabled?
-      self.class.logged_events.push(self)
-    end
+    Pulsar.maybe_log_event(self)
 
     self.class.subscribers.each do |s|
       s.call(self)
