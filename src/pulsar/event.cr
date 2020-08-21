@@ -46,8 +46,9 @@ abstract class Pulsar::Event < Pulsar::BaseEvent
   # ```crystal
   # MyEvent.publish(custom_argument: "This is my custom event argument")
   # ```
-  def self.publish(*args, **named_args)
-    new(*args, **named_args).publish
+  def self.publish(*args_, **named_args_)
+    # Name it args_ so if the initializer has an `args` argument `publish` will still work
+    new(*args_, **named_args_).publish
   end
 
   protected def publish

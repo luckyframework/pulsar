@@ -57,8 +57,9 @@ abstract class Pulsar::TimedEvent < Pulsar::BaseEvent
   #   # ...run some code
   # end
   # ```
-  def self.publish(*args, **named_args)
-    new(*args, **named_args).publish do
+  def self.publish(*args_, **named_args_)
+    # Name it args_ so if the initializer has an `args` argument `publish` will still work
+    new(*args_, **named_args_).publish do
       yield
     end
   end
