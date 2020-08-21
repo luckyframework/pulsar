@@ -1,10 +1,10 @@
-abstract class Pulsar::TimedEvent
-  # When the event started
-  getter :started_at
+require "./base_event"
 
+abstract class Pulsar::TimedEvent < Pulsar::BaseEvent
   macro inherited
-    @started_at : Time = Time.utc
     protected class_property subscribers = [] of self, Time::Span -> Nil
+    # Used by `Pulsar::SpecHelper` to test for logged events
+    class_property logged_events = [] of self
   end
 
   # Subscribe to events
@@ -73,13 +73,5 @@ abstract class Pulsar::TimedEvent
     end
 
     result
-  end
-
-  # Returns the name of the event.
-  #
-  # The event name is the name of the class. So an class of `MyShard::MyEvent` would
-  # return `"MyShard::MyEvent"`.
-  def name
-    self.class.name
   end
 end
