@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.34.0">
+<meta name="crystal_docs.project_version" content="0.2.1">
+<meta name="crystal_docs.project_name" content="pulsar">
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+
+  <meta id="repository-name" content="pulsar">
+  <title>Pulsar::TimedEvent - pulsar 0.2.1</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          pulsar
+        </a>
+      </h1>
+
+      <span class="project-version">
+        0.2.1
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="pulsar/Pulsar" data-name="pulsar">
+      <a href="../Pulsar.html">Pulsar</a>
+      
+        <ul>
+  
+  <li class=" " data-id="pulsar/Pulsar/BaseEvent" data-name="pulsar::baseevent">
+      <a href="../Pulsar/BaseEvent.html">BaseEvent</a>
+      
+    </li>
+  
+  <li class=" " data-id="pulsar/Pulsar/Event" data-name="pulsar::event">
+      <a href="../Pulsar/Event.html">Event</a>
+      
+    </li>
+  
+  <li class=" current" data-id="pulsar/Pulsar/TimedEvent" data-name="pulsar::timedevent">
+      <a href="../Pulsar/TimedEvent.html">TimedEvent</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">abstract class</span> Pulsar::TimedEvent
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Pulsar/TimedEvent.html">Pulsar::TimedEvent</a></li><li class="superclass"><a href="../Pulsar/BaseEvent.html">Pulsar::BaseEvent</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+
+
+
+
+
+
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#publish(*args_,**named_args_,&)-class-method" class="signature"><strong>.publish</strong>(*args_, **named_args_, &)</a>
+        
+          <div class="summary"><p>Publishes the event when the block finishes running.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#subscribe(&block:self,Time::Span-%3ENil)-class-method" class="signature"><strong>.subscribe</strong>(&block : <span class="k">self</span>, Time::Span -> Nil)</a>
+        
+          <div class="summary"><p>Subscribe to events</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#started_at:Time-instance-method" class="signature"><strong>#started_at</strong> : Time</a>
+        
+          <div class="summary"><p>When the event started</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="../Pulsar/BaseEvent.html">Pulsar::BaseEvent</a></code></h3>
+  
+  
+    <a href="../Pulsar/BaseEvent.html#name-instance-method" class="tooltip">
+      <span>name</span>
+    name</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="publish(*args_,**named_args_,&)-class-method">
+      <div class="signature">
+        
+        def self.<strong>publish</strong>(*args_, **named_args_, &)
+
+        <a class="method-permalink" href="#publish(*args_,**named_args_,&)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Publishes the event when the block finishes running.</p>
+
+<p>Similar to <code><a href="../Pulsar/Event.html#publish(*args_,**named_args_)-class-method">Pulsar::Event#publish</a></code> but measures and publishes the time
+it takes to run the block.</p>
+
+<pre><code class="language-crystal"><span class="t">MyEvent</span>.publish <span class="k">do</span>
+  <span class="c"># Run some code</span>
+<span class="k">end</span></code></pre>
+
+<p>The <code><a href="../Pulsar/TimedEvent.html#publish(*args_,**named_args_,&)-class-method">.publish</a></code> method returns the result of the block.</p>
+
+<h3><a id="passing-arguments-to-initialize" class="anchor" href="#passing-arguments-to-initialize">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Passing arguments to initialize</h3>
+
+<p>If your event defines an <code>initialize</code> and requires arguments, you can
+pass those arguments to <code><a href="../Pulsar/TimedEvent.html#publish(*args_,**named_args_,&)-class-method">.publish</a></code>.</p>
+
+<p>For example if you had the event:</p>
+
+<pre><code class="language-crystal"><span class="k">class</span> <span class="t">MyEvent</span> <span class="o">&lt;</span> <span class="t">Pulsar</span><span class="t">::</span><span class="t">TimedEvent</span>
+  <span class="k">def</span> <span class="m">initialize</span>(custom_argument : <span class="t">String</span>)
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+
+<p>You would pass the arguments to <code><a href="../Pulsar/TimedEvent.html#publish(*args_,**named_args_,&)-class-method">.publish</a></code> and they will be used to
+initialize the event:</p>
+
+<pre><code class="language-crystal"><span class="t">MyEvent</span>.publish(custom_argument: <span class="s">&quot;This is my custom event argument&quot;</span>) <span class="k">do</span>
+  <span class="c"># ...run some code</span>
+<span class="k">end</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="subscribe(&block:self,Time::Span->Nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>subscribe</strong>(&block : <span class="k">self</span>, Time::Span -> Nil)
+
+        <a class="method-permalink" href="#subscribe(&block:self,Time::Span-%3ENil)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Subscribe to events</p>
+
+<pre><code class="language-crystal"><span class="t">MyEvent</span>.subscribe <span class="k">do</span> <span class="o">|</span>event, duration<span class="o">|</span>
+  <span class="c"># Do something with the event and duration</span>
+<span class="k">end</span>
+
+<span class="t">MyEvent</span>.publish <span class="k">do</span>
+  <span class="c"># Do something</span>
+<span class="k">end</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="started_at:Time-instance-method">
+      <div class="signature">
+        
+        def <strong>started_at</strong> : Time
+
+        <a class="method-permalink" href="#started_at:Time-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>When the event started</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>
