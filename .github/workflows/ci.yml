@@ -2,34 +2,36 @@ name: Crystal CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
     branches: "*"
 
 jobs:
   check_format:
     runs-on: ubuntu-latest
-    
+
     container:
       image: crystallang/crystal
-      
+
     steps:
       - uses: actions/checkout@v1
-      - name: Install shards
-        run: shards install
       - name: Format
         run: crystal tool format --check
-     
-  build:
 
+  build:
     runs-on: ubuntu-latest
 
     container:
       image: crystallang/crystal
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Install shards
-      run: shards install
-    - name: Run tests
-      run: crystal spec
+      - uses: actions/checkout@v2
+      - name: Install shards
+        run: shards install
+      - name: Cache Crystal
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/crystal
+          key: ${{ runner.os }}-crystal
+      - name: Run tests
+        run: crystal spec
