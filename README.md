@@ -1,5 +1,7 @@
 # Pulsar
 
+[![API Documentation Website](https://img.shields.io/website?down_color=red&down_message=Offline&label=API%20Documentation&up_message=Online&url=https%3A%2F%2Fluckyframework.github.io%2Fpulsar%2F)](https://luckyframework.github.io/pulsar)
+
 Pulsar is a simple Crystal library for publishing and subscribing to events.
 It also has timing information for metrics. So what does that mean in
 practice?
@@ -176,7 +178,6 @@ puts "I just took 5 seconds to print!"
 
 Oops. To get around this you can spawn a new fiber:
 
-
 ```crystal
 MyEvent.subscribe do |event|
   # Now the `sleep` will run in a new Fiber and will not block this one
@@ -197,7 +198,7 @@ You could also use a background job library like https://github.com/robacarp/mos
 
 Be aware that running things in a Fiber will lose the current Fiber's context. This is
 important for logging since `Log.context` only works for the current Fiber.
-So if you plan to log using the built-in Logger, you likely *do not* want to
+So if you plan to log using the built-in Logger, you likely _do not_ want to
 spawn a new fiber. It is fast enough to just log like normal.
 
 ## Contributing
