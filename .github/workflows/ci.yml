@@ -1,4 +1,4 @@
-name: Crystal CI
+name: Pulsar CI
 
 on:
   push:
@@ -8,10 +8,17 @@ on:
 
 jobs:
   check_format:
+    strategy:
+      fail-fast: false
+      matrix:
+        crystal_version:
+          - 0.35.1
+          - 1.0.0
+        experimental:
+          - false
     runs-on: ubuntu-latest
-
-    container:
-      image: crystallang/crystal
+    continue-on-error: ${{ matrix.experimental }}
+    container: crystallang/crystal:${{ matrix.crystal_version }}-alpine
 
     steps:
       - uses: actions/checkout@v1
@@ -19,10 +26,17 @@ jobs:
         run: crystal tool format --check
 
   build:
+    strategy:
+      fail-fast: false
+      matrix:
+        crystal_version:
+          - 0.35.1
+          - 1.0.0
+        experimental:
+          - false
     runs-on: ubuntu-latest
-
-    container:
-      image: crystallang/crystal
+    continue-on-error: ${{ matrix.experimental }}
+    container: crystallang/crystal:${{ matrix.crystal_version }}-alpine
 
     steps:
       - uses: actions/checkout@v2

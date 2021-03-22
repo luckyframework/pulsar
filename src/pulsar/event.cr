@@ -9,7 +9,7 @@ abstract class Pulsar::Event < Pulsar::BaseEvent
 
   # Subscribe to events
   #
-  # ```crystal
+  # ```
   # MyEvent.subscribe do |event|
   #   puts event.name # "MyEvent"
   # end
@@ -22,7 +22,7 @@ abstract class Pulsar::Event < Pulsar::BaseEvent
 
   # Publishes the event to all subscribers.
   #
-  # ```crystal
+  # ```
   # MyEvent.publish
   # ```
   #
@@ -33,7 +33,7 @@ abstract class Pulsar::Event < Pulsar::BaseEvent
   #
   # For example if you had the event:
   #
-  # ```crystal
+  # ```
   # class MyEvent < Pulsar::Event
   #   def initialize(custom_argument : String)
   #   end
@@ -43,7 +43,7 @@ abstract class Pulsar::Event < Pulsar::BaseEvent
   # You would pass the arguments to `publish` and they will be used to
   # initialize the event:
   #
-  # ```crystal
+  # ```
   # MyEvent.publish(custom_argument: "This is my custom event argument")
   # ```
   def self.publish(*args_, **named_args_)

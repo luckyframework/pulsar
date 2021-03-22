@@ -11,7 +11,7 @@ module Pulsar
   # spec is run. You can access an Event's log using the `logged_events` class
   # method
   #
-  # ```crystal
+  # ```
   # MyEvent.publish
   #
   # MyEvent.logged_events.size.should eq(1)
@@ -44,7 +44,7 @@ module Pulsar
 
   # Will return the time taken (`Time::Span`) as a human readable `String`.
   #
-  # ```crystal
+  # ```
   # Database::QueryEvent.subscribe do |event, duration|
   #   puts Pulsar.elaspted_text(duration) # "2.3ms"
   # end
