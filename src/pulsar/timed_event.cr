@@ -9,7 +9,7 @@ abstract class Pulsar::TimedEvent < Pulsar::BaseEvent
 
   # Subscribe to events
   #
-  # ```crystal
+  # ```
   # MyEvent.subscribe do |event, duration|
   #   # Do something with the event and duration
   # end
@@ -27,7 +27,7 @@ abstract class Pulsar::TimedEvent < Pulsar::BaseEvent
   # Similar to `Pulsar::Event#publish` but measures and publishes the time
   # it takes to run the block.
   #
-  # ```crystal
+  # ```
   # MyEvent.publish do
   #   # Run some code
   # end
@@ -42,7 +42,7 @@ abstract class Pulsar::TimedEvent < Pulsar::BaseEvent
   #
   # For example if you had the event:
   #
-  # ```crystal
+  # ```
   # class MyEvent < Pulsar::TimedEvent
   #   def initialize(custom_argument : String)
   #   end
@@ -52,7 +52,7 @@ abstract class Pulsar::TimedEvent < Pulsar::BaseEvent
   # You would pass the arguments to `publish` and they will be used to
   # initialize the event:
   #
-  # ```crystal
+  # ```
   # MyEvent.publish(custom_argument: "This is my custom event argument") do
   #   # ...run some code
   # end
