@@ -50,7 +50,7 @@ describe Pulsar do
 
   it "allows publishing with custom args" do
     called = false
-    Pulsar::EventWithInit.subscribe do |event|
+    Pulsar::EventWithInit.subscribe do |_event|
       called = true
     end
 
