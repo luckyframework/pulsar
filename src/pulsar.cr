@@ -1,7 +1,7 @@
 require "./pulsar/*"
 
 module Pulsar
-  VERSION     = "0.2.1"
+  VERSION     = "0.2.2"
   EVENT_TYPES = [] of Pulsar::Event.class | Pulsar::TimedEvent.class
   class_property? test_mode_enabled : Bool = false
 
