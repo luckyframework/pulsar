@@ -75,4 +75,16 @@ describe Pulsar do
     result.should eq(:return_me)
     called.should be_true
   end
+
+  it "allows clearing subscribers" do
+    called = false
+    Pulsar::TestEvent.subscribe do
+      called = true
+    end
+
+    Pulsar::TestEvent.clear_subscribers
+    Pulsar::TestEvent.publish
+
+    called.should be_false
+  end
 end
