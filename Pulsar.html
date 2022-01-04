@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="pulsar">
 
@@ -116,14 +116,14 @@
   </h2>
   
     
-      <a href="https://github.com/luckyframework/pulsar/blob/e2998a21d350e1ae5c308e79295c885be1643af0/src/pulsar.cr#L3" target="_blank">
+      <a href="https://github.com/luckyframework/pulsar/blob/8cf2c8abf87514d9335427cc0c79a8096e480116/src/pulsar.cr#L3" target="_blank">
         pulsar.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/luckyframework/pulsar/blob/e2998a21d350e1ae5c308e79295c885be1643af0/src/pulsar/base_event.cr#L1" target="_blank">
+      <a href="https://github.com/luckyframework/pulsar/blob/8cf2c8abf87514d9335427cc0c79a8096e480116/src/pulsar/base_event.cr#L1" target="_blank">
         pulsar/base_event.cr
       </a>
     
@@ -171,26 +171,26 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#elapsed_text(elapsed:Time::Span):String-class-method" class="signature"><strong>.elapsed_text</strong>(elapsed : Time::Span) : String</a>
+        <a href="#elapsed_text%28elapsed%3ATime%3A%3ASpan%29%3AString-class-method" class="signature"><strong>.elapsed_text</strong>(elapsed : Time::Span) : String</a>
         
           <div class="summary"><p>Will return the time taken (<code>Time::Span</code>) as a human readable <code>String</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#enable_test_mode!-class-method" class="signature"><strong>.enable_test_mode!</strong></a>
+        <a href="#enable_test_mode%21-class-method" class="signature"><strong>.enable_test_mode!</strong></a>
         
           <div class="summary"><p>Enable test mode to log published events</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#test_mode_enabled=(test_mode_enabled:Bool)-class-method" class="signature"><strong>.test_mode_enabled=</strong>(test_mode_enabled : Bool)</a>
+        <a href="#test_mode_enabled%3D%28test_mode_enabled%3ABool%29-class-method" class="signature"><strong>.test_mode_enabled=</strong>(test_mode_enabled : Bool)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#test_mode_enabled?:Bool-class-method" class="signature"><strong>.test_mode_enabled?</strong> : Bool</a>
+        <a href="#test_mode_enabled%3F%3ABool-class-method" class="signature"><strong>.test_mode_enabled?</strong> : Bool</a>
         
       </li>
     
@@ -223,24 +223,22 @@
         
         def self.<strong>elapsed_text</strong>(elapsed : Time::Span) : String
 
-        <a class="method-permalink" href="#elapsed_text(elapsed:Time::Span):String-class-method">#</a>
+        <a class="method-permalink" href="#elapsed_text%28elapsed%3ATime%3A%3ASpan%29%3AString-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Will return the time taken (<code>Time::Span</code>) as a human readable <code>String</code>.</p>
-
 <pre><code class="language-crystal"><span class="t">Database</span><span class="t">::</span><span class="t">QueryEvent</span>.subscribe <span class="k">do</span> <span class="o">|</span>event, duration<span class="o">|</span>
   puts <span class="t">Pulsar</span>.elaspted_text(duration) <span class="c"># &quot;2.3ms&quot;</span>
 <span class="k">end</span></code></pre>
-
 <p>This method can be used with any <code>Time::Span</code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/luckyframework/pulsar/blob/e2998a21d350e1ae5c308e79295c885be1643af0/src/pulsar.cr#L54" target="_blank">View source</a>]
+          [<a href="https://github.com/luckyframework/pulsar/blob/8cf2c8abf87514d9335427cc0c79a8096e480116/src/pulsar.cr#L54" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -250,17 +248,15 @@
         
         def self.<strong>enable_test_mode!</strong>
 
-        <a class="method-permalink" href="#enable_test_mode!-class-method">#</a>
+        <a class="method-permalink" href="#enable_test_mode%21-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Enable test mode to log published events</p>
-
 <p>This will enable an in memory log of events that gets cleared before each
 spec is run. You can access an Event's log using the <code>logged_events</code> class
 method</p>
-
 <pre><code class="language-crystal"><span class="t">MyEvent</span>.publish
 
 <span class="t">MyEvent</span>.logged_events.size.should eq(<span class="n">1</span>)
@@ -270,7 +266,7 @@ method</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/luckyframework/pulsar/blob/e2998a21d350e1ae5c308e79295c885be1643af0/src/pulsar.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/luckyframework/pulsar/blob/8cf2c8abf87514d9335427cc0c79a8096e480116/src/pulsar.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -280,13 +276,13 @@ method</p>
         
         def self.<strong>test_mode_enabled=</strong>(test_mode_enabled : Bool)
 
-        <a class="method-permalink" href="#test_mode_enabled=(test_mode_enabled:Bool)-class-method">#</a>
+        <a class="method-permalink" href="#test_mode_enabled%3D%28test_mode_enabled%3ABool%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/luckyframework/pulsar/blob/e2998a21d350e1ae5c308e79295c885be1643af0/src/pulsar.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/luckyframework/pulsar/blob/8cf2c8abf87514d9335427cc0c79a8096e480116/src/pulsar.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -296,13 +292,13 @@ method</p>
         
         def self.<strong>test_mode_enabled?</strong> : Bool
 
-        <a class="method-permalink" href="#test_mode_enabled?:Bool-class-method">#</a>
+        <a class="method-permalink" href="#test_mode_enabled%3F%3ABool-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/luckyframework/pulsar/blob/e2998a21d350e1ae5c308e79295c885be1643af0/src/pulsar.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/luckyframework/pulsar/blob/8cf2c8abf87514d9335427cc0c79a8096e480116/src/pulsar.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>

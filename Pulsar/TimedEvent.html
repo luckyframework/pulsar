@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="pulsar">
 
@@ -118,7 +118,7 @@
   </h2>
   
     
-      <a href="https://github.com/luckyframework/pulsar/blob/e2998a21d350e1ae5c308e79295c885be1643af0/src/pulsar/timed_event.cr#L3" target="_blank">
+      <a href="https://github.com/luckyframework/pulsar/blob/8cf2c8abf87514d9335427cc0c79a8096e480116/src/pulsar/timed_event.cr#L3" target="_blank">
         pulsar/timed_event.cr
       </a>
     
@@ -142,14 +142,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#publish(*args_,**named_args_,&)-class-method" class="signature"><strong>.publish</strong>(*args_, **named_args_, &)</a>
+        <a href="#publish%28%2Aargs_%2C%2A%2Anamed_args_%2C%26%29-class-method" class="signature"><strong>.publish</strong>(*args_, **named_args_, &)</a>
         
           <div class="summary"><p>Publishes the event when the block finishes running.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#subscribe(&block:self,Time::Span-%3ENil)-class-method" class="signature"><strong>.subscribe</strong>(&block : <span class="k">self</span>, Time::Span -> Nil)</a>
+        <a href="#subscribe%28%26block%3Aself%2CTime%3A%3ASpan-%3ENil%29-class-method" class="signature"><strong>.subscribe</strong>(&block : <span class="k">self</span>, Time::Span -> Nil)</a>
         
           <div class="summary"><p>Subscribe to events</p></div>
         
@@ -170,7 +170,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#started_at:Time-instance-method" class="signature"><strong>#started_at</strong> : Time</a>
+        <a href="#started_at%3ATime-instance-method" class="signature"><strong>#started_at</strong> : Time</a>
         
           <div class="summary"><p>When the event started</p></div>
         
@@ -200,6 +200,15 @@
 
 
     
+
+  <h3>Class methods inherited from class <code><a href="../Pulsar/BaseEvent.html">Pulsar::BaseEvent</a></code></h3>
+  
+  
+    <a href="../Pulsar/BaseEvent.html#clear_subscribers-class-method" class="tooltip">
+      <span>clear_subscribers</span>
+    clear_subscribers</a>
+    
+  
 
 
   
@@ -242,41 +251,32 @@
         
         def self.<strong>publish</strong>(*args_, **named_args_, &)
 
-        <a class="method-permalink" href="#publish(*args_,**named_args_,&)-class-method">#</a>
+        <a class="method-permalink" href="#publish%28%2Aargs_%2C%2A%2Anamed_args_%2C%26%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Publishes the event when the block finishes running.</p>
-
-<p>Similar to <code><a href="../Pulsar/Event.html#publish(*args_,**named_args_)-class-method">Pulsar::Event#publish</a></code> but measures and publishes the time
+<p>Similar to <code><a href="../Pulsar/Event.html#publish%28%2Aargs_%2C%2A%2Anamed_args_%29-class-method">Pulsar::Event#publish</a></code> but measures and publishes the time
 it takes to run the block.</p>
-
 <pre><code class="language-crystal"><span class="t">MyEvent</span>.publish <span class="k">do</span>
   <span class="c"># Run some code</span>
 <span class="k">end</span></code></pre>
-
-<p>The <code><a href="../Pulsar/TimedEvent.html#publish(*args_,**named_args_,&)-class-method">.publish</a></code> method returns the result of the block.</p>
-
+<p>The <code><a href="../Pulsar/TimedEvent.html#publish%28%2Aargs_%2C%2A%2Anamed_args_%2C%26%29-class-method">.publish</a></code> method returns the result of the block.</p>
 <h3><a id="passing-arguments-to-initialize" class="anchor" href="#passing-arguments-to-initialize">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Passing arguments to initialize</h3>
-
 <p>If your event defines an <code>initialize</code> and requires arguments, you can
-pass those arguments to <code><a href="../Pulsar/TimedEvent.html#publish(*args_,**named_args_,&)-class-method">.publish</a></code>.</p>
-
+pass those arguments to <code><a href="../Pulsar/TimedEvent.html#publish%28%2Aargs_%2C%2A%2Anamed_args_%2C%26%29-class-method">.publish</a></code>.</p>
 <p>For example if you had the event:</p>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">MyEvent</span> <span class="o">&lt;</span> <span class="t">Pulsar</span><span class="t">::</span><span class="t">TimedEvent</span>
   <span class="k">def</span> <span class="m">initialize</span>(custom_argument : <span class="t">String</span>)
   <span class="k">end</span>
 <span class="k">end</span></code></pre>
-
-<p>You would pass the arguments to <code><a href="../Pulsar/TimedEvent.html#publish(*args_,**named_args_,&)-class-method">.publish</a></code> and they will be used to
+<p>You would pass the arguments to <code><a href="../Pulsar/TimedEvent.html#publish%28%2Aargs_%2C%2A%2Anamed_args_%2C%26%29-class-method">.publish</a></code> and they will be used to
 initialize the event:</p>
-
 <pre><code class="language-crystal"><span class="t">MyEvent</span>.publish(custom_argument: <span class="s">&quot;This is my custom event argument&quot;</span>) <span class="k">do</span>
   <span class="c"># ...run some code</span>
 <span class="k">end</span></code></pre>
@@ -285,7 +285,7 @@ initialize the event:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/luckyframework/pulsar/blob/e2998a21d350e1ae5c308e79295c885be1643af0/src/pulsar/timed_event.cr#L60" target="_blank">View source</a>]
+          [<a href="https://github.com/luckyframework/pulsar/blob/8cf2c8abf87514d9335427cc0c79a8096e480116/src/pulsar/timed_event.cr#L60" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -295,13 +295,12 @@ initialize the event:</p>
         
         def self.<strong>subscribe</strong>(&block : <span class="k">self</span>, Time::Span -> Nil)
 
-        <a class="method-permalink" href="#subscribe(&block:self,Time::Span-%3ENil)-class-method">#</a>
+        <a class="method-permalink" href="#subscribe%28%26block%3Aself%2CTime%3A%3ASpan-%3ENil%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Subscribe to events</p>
-
 <pre><code class="language-crystal"><span class="t">MyEvent</span>.subscribe <span class="k">do</span> <span class="o">|</span>event, duration<span class="o">|</span>
   <span class="c"># Do something with the event and duration</span>
 <span class="k">end</span>
@@ -314,7 +313,7 @@ initialize the event:</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/luckyframework/pulsar/blob/e2998a21d350e1ae5c308e79295c885be1643af0/src/pulsar/timed_event.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/luckyframework/pulsar/blob/8cf2c8abf87514d9335427cc0c79a8096e480116/src/pulsar/timed_event.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -336,7 +335,7 @@ initialize the event:</p>
         
         def <strong>started_at</strong> : Time
 
-        <a class="method-permalink" href="#started_at:Time-instance-method">#</a>
+        <a class="method-permalink" href="#started_at%3ATime-instance-method">#</a>
       </div>
       
         <div class="doc">

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.0.0">
+<meta name="generator" content="Crystal Docs 1.1.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="pulsar">
 
@@ -83,60 +83,49 @@
 
 
 <div class="main-content">
-<h1><a id="pulsar" class="anchor" href="#pulsar">
-  <svg class="octicon-link" aria-hidden="true">
+<h1><a id="pulsar" class="anchor" href="#pulsar">  <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Pulsar</h1>
-
-<p><a href="https://luckyframework.github.io/pulsar"><img src="https://img.shields.io/website?down_color=red&down_message=Offline&label=API%20Documentation&up_message=Online&url=https%3A%2F%2Fluckyframework.github.io%2Fpulsar%2F" alt="API Documentation Website"/></a></p>
-
+<p><a href="https://luckyframework.github.io/pulsar"><img src="https://img.shields.io/website?down_color=red&amp;down_message=Offline&amp;label=API%20Documentation&amp;up_message=Online&amp;url=https://luckyframework.github.io/pulsar/" alt="API Documentation Website" /></a></p>
 <p>Pulsar is a simple Crystal library for publishing and subscribing to events.
 It also has timing information for metrics. So what does that mean in
 practice?</p>
-
 <p>You can define an event and any number of subscribers can subscribe to the
 event and do whatever they need with it.</p>
-
 <p>For example, in Lucky, we use Pulsar to create events for things like
 requests being processed, queries being made, before and after pipes running.
 Then we subscribe to these events to write to the logs. We also use this
 internally to log debugging information in an upcoming UI called Breeze that
 let's users debug development information.</p>
-
 <h2><a id="installation" class="anchor" href="#installation">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Installation</h2>
-
-<ol><li>Add the dependency to your <code>shard.yml</code>:</li></ol>
-
-<p><code></code>`yaml
-   dependencies:</p>
-
-<pre><code class="language-crystal"> pulsar:
-   github: luckyframework/pulsar</code></pre>
-
-<p><code></code>`</p>
-
-<ol><li>Run <code>shards install</code></li></ol>
-
+<ol>
+<li>
+<p>Add the dependency to your <code>shard.yml</code>:</p>
+<pre><code class="language-yaml">dependencies:
+  pulsar:
+    github: luckyframework/pulsar</code></pre>
+</li>
+<li>
+<p>Run <code>shards install</code></p>
+</li>
+</ol>
 <h2><a id="how-to-use-pulsar" class="anchor" href="#how-to-use-pulsar">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>How to use Pulsar</h2>
-
 <p>Let's say we're writing a library to charge a credit card and we may want to let
 people run code whenever a charge is made. Here's how you can do that with Pulsar.</p>
-
 <h3><a id="create-and-publish-an-event" class="anchor" href="#create-and-publish-an-event">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Create and publish an event</h3>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">PaymentProcessor</span><span class="t">::</span><span class="t">ChargeCardEvent</span> <span class="o">&lt;</span> <span class="t">Pulsar</span><span class="t">::</span><span class="t">Event</span>
   <span class="k">def</span> <span class="m">initialize</span>(@amount : <span class="t">Int32</span>)
   <span class="k">end</span>
@@ -150,30 +139,24 @@ people run code whenever a charge is made. Here's how you can do that with Pulsa
     <span class="t">PaymentProcessor</span><span class="t">::</span><span class="t">ChargeCardEvent</span>.publish(amount)
   <span class="k">end</span>
 <span class="k">end</span></code></pre>
-
 <h3><a id="subscribe-to-it-and-do-whatever-you-want-with-it" class="anchor" href="#subscribe-to-it-and-do-whatever-you-want-with-it">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Subscribe to it and do whatever you want with it</h3>
-
 <p>Now you can subscribe to the event and do whatever you want with it. For example,
 you might log that a charge was made, or you might send an email to the sales team.</p>
-
 <pre><code class="language-crystal"><span class="t">PaymentProcessor</span><span class="t">::</span><span class="t">ChargeCardEvent</span>.subscribe <span class="k">do</span> <span class="o">|</span>event<span class="o">|</span>
   puts <span class="s">&quot;Charged: </span><span class="i">#{</span>event.amount<span class="i">}</span><span class="s"> at </span><span class="i">#{</span>event.started_at<span class="i">}</span><span class="s">&quot;</span>
 <span class="k">end</span></code></pre>
-
 <h3><a id="recording-timing-information" class="anchor" href="#recording-timing-information">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Recording timing information</h3>
-
 <p>You can also time how long it takes to run an event by inheriting from
 <code><a href="Pulsar/TimedEvent.html">Pulsar::TimedEvent</a></code>. You define them in the same way, but when you subscribe
 you must also accept a second argument:</p>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">Database</span><span class="t">::</span><span class="t">QueryEvent</span> <span class="o">&lt;</span> <span class="t">Pulsar</span><span class="t">::</span><span class="t">TimedEvent</span>
 <span class="k">end</span>
 
@@ -184,18 +167,14 @@ you must also accept a second argument:</p>
 <span class="t">Database</span><span class="t">::</span><span class="t">QueryEvent</span>.publish <span class="k">do</span>
   <span class="c"># Run a query, run some other code, etc.</span>
 <span class="k">end</span></code></pre>
-
 <h3><a id="add-more-information-to-the-event" class="anchor" href="#add-more-information-to-the-event">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Add more information to the event</h3>
-
 <p>To add more information to the event you can use <code>initialize</code> like you would
 with any other Crystal class.</p>
-
 <p>For example, we can record the database query in the event from above</p>
-
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">Database</span><span class="t">::</span><span class="t">QueryEvent</span> <span class="o">&lt;</span> <span class="t">Pulsar</span><span class="t">::</span><span class="t">TimedEvent</span>
   getter <span class="n">:query</span>
 
@@ -210,25 +189,19 @@ with any other Crystal class.</p>
 <span class="t">Database</span><span class="t">::</span><span class="t">QueryEvent</span>.publish(query: <span class="s">&quot;SELECT * FROM users&quot;</span>) <span class="k">do</span>
   <span class="c"># Run a query, run some other code, etc.</span>
 <span class="k">end</span></code></pre>
-
 <h2><a id="testing-pulsar-events" class="anchor" href="#testing-pulsar-events">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Testing Pulsar events</h2>
-
 <p>If you want to test that events are published you can use Pulsar's built-in test mode.</p>
-
 <pre><code class="language-crystal"><span class="c"># Typically in spec/spec_helper.cr</span>
 
 <span class="c"># Must come *after* `require &quot;spec&quot;`</span>
 <span class="t">Pulsar</span>.enable_test_mode!</code></pre>
-
 <p>This will enable an in-memory log for published events and will set up a hook to
 clear the events before each spec runs.</p>
-
 <p>You can access events using <code>{MyEventClass}.logged_events</code>.</p>
-
 <pre><code class="language-crystal"># Create an event
 class QueryEvent < Pulsar::TimedEvent
   def initialize(@query : String)
@@ -248,41 +221,32 @@ it "publishes an event when a SQL query is executed" do
   the_published_event = QueryEvent.logged_events.first
   the_published_event.query.should eq("SELECT * FROM users")
 end</code></pre>
-
 <h2><a id="pulsar.elapsed-text" class="anchor" href="#pulsar.elapsed-text">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a><code>Pulsar.elapsed_text</code></h2>
-
 <p><code>Pulsar.elapsed_text</code> will return the time taken (<code>Time::Span</code>) as a human readable String.</p>
-
 <pre><code class="language-crystal"><span class="t">Database</span><span class="t">::</span><span class="t">QueryEvent</span>.subscribe <span class="k">do</span> <span class="o">|</span>event, duration<span class="o">|</span>
   puts <span class="t">Pulsar</span>.elaspted_text(duration) <span class="c"># &quot;2.3ms&quot;</span>
 <span class="k">end</span></code></pre>
-
 <p>This method can be used with any <code>Time::Span</code>.</p>
-
 <h2><a id="performance-gotchas" class="anchor" href="#performance-gotchas">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Performance gotchas</h2>
-
 <p>Subscribers are notified synchronously in the same Fiber as the publisher.
 This means that if you have a subscriber that takes a long time to run, it
 will block anything else from running.</p>
-
 <p>If you are doing some logging it is probably fine, but if you are doing
 something more time-intensive or failure prone like making an HTTP request or
 saving to the database you should pay special attention.</p>
-
 <h3><a id="example-of-a-problematic-subscriber" class="anchor" href="#example-of-a-problematic-subscriber">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Example of a problematic subscriber</h3>
-
 <pre><code class="language-crystal"><span class="t">MyEvent</span>.subscribe <span class="k">do</span> <span class="o">|</span>event<span class="o">|</span>
   sleep(<span class="n">5</span>)
 <span class="k">end</span>
@@ -290,9 +254,7 @@ saving to the database you should pay special attention.</p>
 <span class="t">MyEvent</span>.publish
 
 puts <span class="s">&quot;I just took 5 seconds to print!&quot;</span></code></pre>
-
 <p>Oops. To get around this you can spawn a new fiber:</p>
-
 <pre><code class="language-crystal"><span class="t">MyEvent</span>.subscribe <span class="k">do</span> <span class="o">|</span>event<span class="o">|</span>
   <span class="c"># Now the `sleep` will run in a new Fiber and will not block this one</span>
   spawn <span class="k">do</span>
@@ -303,36 +265,37 @@ puts <span class="s">&quot;I just took 5 seconds to print!&quot;</span></code></
 <span class="t">MyEvent</span>.publish
 
 puts <span class="s">&quot;This will print right away!&quot;</span></code></pre>
-
 <h3><a id="potential-solutions" class="anchor" href="#potential-solutions">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Potential solutions</h3>
-
 <p>As described above you could run long running code in a new Fiber with <code>spawn</code>.
 You could also use a background job library like https://github.com/robacarp/mosquito.</p>
-
 <p>Be aware that running things in a Fiber will lose the current Fiber's context. This is
 important for logging since <code>Log.context</code> only works for the current Fiber.
 So if you plan to log using the built-in Logger, you likely <em>do not</em> want to
 spawn a new fiber. It is fast enough to just log like normal.</p>
-
 <h2><a id="contributing" class="anchor" href="#contributing">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Contributing</h2>
-
-<ol><li>Fork it (&lt;https://github.com/luckyframework/pulsar/fork>)</li><li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li><li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li><li>Push to the branch (<code>git push origin my-new-feature</code>)</li><li>Create a new Pull Request</li></ol>
-
+<ol>
+<li>Fork it (<a href="https://github.com/luckyframework/pulsar/fork">https://github.com/luckyframework/pulsar/fork</a>)</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create a new Pull Request</li>
+</ol>
 <h2><a id="contributors" class="anchor" href="#contributors">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Contributors</h2>
-
-<ul><li><a href="https://github.com/paulcsmith">paulcsmith</a> - creator and maintainer</li></ul>
+<ul>
+<li><a href="https://github.com/paulcsmith">paulcsmith</a> - creator and maintainer</li>
+</ul>
 </div>
 </body>
 </html>
