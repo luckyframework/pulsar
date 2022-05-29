@@ -4,11 +4,11 @@ version: 0.2.3
 authors:
   - Paul Smith <@paulcsmith>
 
-crystal: ">= 1.0.0"
+crystal: ">= 1.4.0"
 
 license: MIT
 
 development_dependencies:
   ameba:
     github: crystal-ameba/ameba
-    version: ~> 0.14.2
+    version: ~> 1.0.0
