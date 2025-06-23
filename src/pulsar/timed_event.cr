@@ -22,6 +22,32 @@ abstract class Pulsar::TimedEvent < Pulsar::BaseEvent
     self.subscribers << block
   end
 
+  # Subscribe to events with async execution
+  #
+  # The subscriber will be executed in a new fiber, preventing it from
+  # blocking other subscribers or the main execution flow.
+  #
+  # ```
+  # MyEvent.subscribe_async do |event, duration|
+  #   # This runs in a separate fiber
+  #   HTTP::Client.post("https://example.com/metrics", body: {
+  #     event:       event.name,
+  #     duration_ms: duration.total_milliseconds,
+  #   }.to_json)
+  # end
+  # ```
+  def self.subscribe_async(&block : self, Time::Span -> Nil)
+    subscribe do |event, duration|
+      spawn do
+        begin
+          block.call(event, duration)
+        rescue exception
+          Pulsar::ErrorHandler.handle(exception, event)
+        end
+      end
+    end
+  end
+
   # Publishes the event when the block finishes running.
   #
   # Similar to `Pulsar::Event#publish` but measures and publishes the time
@@ -57,21 +83,25 @@ abstract class Pulsar::TimedEvent < Pulsar::BaseEvent
   #   # ...run some code
   # end
   # ```
-  def self.publish(*args_, **named_args_)
+  def self.publish(*args_, **named_args_, &)
     # Name it args_ so if the initializer has an `args` argument `publish` will still work
     new(*args_, **named_args_).publish do
       yield
     end
   end
 
-  protected def publish
+  protected def publish(&)
     Pulsar.maybe_log_event(self)
     start = Time.monotonic
     result = yield
     duration = Time.monotonic - start
 
-    self.class.subscribers.each do |s|
-      s.call(self, duration)
+    self.class.subscribers.each do |subscriber|
+      begin
+        subscriber.call(self, duration)
+      rescue exception
+        Pulsar::ErrorHandler.handle(exception, self)
+      end
     end
 
     result

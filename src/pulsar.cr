@@ -1,4 +1,5 @@
 require "./pulsar/*"
+require "log"
 
 module Pulsar
   VERSION     = "0.2.3"

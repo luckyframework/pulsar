@@ -148,11 +148,56 @@ end
 
 ```crystal
 Database::QueryEvent.subscribe do |event, duration|
-  puts Pulsar.elaspted_text(duration) # "2.3ms"
+  puts Pulsar.elapsed_text(duration) # "2.3ms"
 end
 ```
 
 This method can be used with any `Time::Span`.
+
+## Asynchronous Subscribers
+
+Pulsar now supports asynchronous event subscribers that automatically run in a separate fiber:
+
+```crystal
+# Regular synchronous subscriber
+MyEvent.subscribe do |event|
+  # This runs synchronously and can block
+end
+
+# Asynchronous subscriber
+MyEvent.subscribe_async do |event|
+  # This automatically runs in a new fiber
+  HTTP::Client.post("https://example.com/webhook", body: event.to_json)
+end
+
+# Also works with timed events
+Database::QueryEvent.subscribe_async do |event, duration|
+  # Won't block other subscribers
+  send_metrics_to_monitoring_service(event.query, duration)
+end
+```
+
+## Error Handling
+
+Pulsar provides configurable error handling for subscribers:
+
+```crystal
+# Configure the error handling strategy
+Pulsar::ErrorHandler.strategy = Pulsar::ErrorHandler::Strategy::Log # Default
+
+# Available strategies:
+# - Ignore: Silently ignore errors and continue
+# - Log: Log errors and continue (default)
+# - Raise: Stop processing and raise the error
+# - Custom: Use a custom error handler
+
+# Custom error handling
+Pulsar::ErrorHandler.strategy = Pulsar::ErrorHandler::Strategy::Custom
+Pulsar::ErrorHandler.custom_handler = ->(exception, event) {
+  MyErrorReporter.report(exception, context: {event: event.name})
+  nil
+}
+```
 
 ## Performance gotchas
 
@@ -162,7 +207,7 @@ will block anything else from running.
 
 If you are doing some logging it is probably fine, but if you are doing
 something more time-intensive or failure prone like making an HTTP request or
-saving to the database you should pay special attention.
+saving to the database you should use `subscribe_async` instead:
 
 ### Example of a problematic subscriber
 
@@ -176,14 +221,12 @@ MyEvent.publish
 puts "I just took 5 seconds to print!"
 ```
 
-Oops. To get around this you can spawn a new fiber:
+### Solution: Use async subscribers
 
 ```crystal
-MyEvent.subscribe do |event|
-  # Now the `sleep` will run in a new Fiber and will not block this one
-  spawn do
-    sleep(5)
-  end
+MyEvent.subscribe_async do |event|
+  # This automatically runs in a new Fiber
+  sleep(5)
 end
 
 MyEvent.publish
@@ -191,15 +234,14 @@ MyEvent.publish
 puts "This will print right away!"
 ```
 
-### Potential solutions
+### Alternative solutions
 
-As described above you could run long running code in a new Fiber with `spawn`.
 You could also use a background job library like https://github.com/robacarp/mosquito.
 
 Be aware that running things in a Fiber will lose the current Fiber's context. This is
 important for logging since `Log.context` only works for the current Fiber.
 So if you plan to log using the built-in Logger, you likely _do not_ want to
-spawn a new fiber. It is fast enough to just log like normal.
+use async subscribers for logging. It is fast enough to just log synchronously.
 
 ## Contributing
 
