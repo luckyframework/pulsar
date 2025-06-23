@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.6.2">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.15.1">
 <meta name="crystal_docs.project_version" content="main">
 <meta name="crystal_docs.project_name" content="pulsar">
 
@@ -22,9 +23,14 @@
 
 <svg class="hidden">
   <symbol id="octicon-link" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
   </symbol>
 </svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="search-box">
@@ -58,6 +64,21 @@
   
   <li class=" " data-id="pulsar/Pulsar/BaseEvent" data-name="pulsar::baseevent">
       <a href="Pulsar/BaseEvent.html">BaseEvent</a>
+      
+    </li>
+  
+  <li class="parent " data-id="pulsar/Pulsar/ErrorHandler" data-name="pulsar::errorhandler">
+      <a href="Pulsar/ErrorHandler.html">ErrorHandler</a>
+      
+        <ul>
+  
+  <li class=" " data-id="pulsar/Pulsar/ErrorHandler/Strategy" data-name="pulsar::errorhandler::strategy">
+      <a href="Pulsar/ErrorHandler/Strategy.html">Strategy</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -228,9 +249,52 @@ end</code></pre>
 </a><code>Pulsar.elapsed_text</code></h2>
 <p><code>Pulsar.elapsed_text</code> will return the time taken (<code>Time::Span</code>) as a human readable String.</p>
 <pre><code class="language-crystal"><span class="t">Database</span><span class="t">::</span><span class="t">QueryEvent</span>.subscribe <span class="k">do</span> <span class="o">|</span>event, duration<span class="o">|</span>
-  puts <span class="t">Pulsar</span>.elaspted_text(duration) <span class="c"># &quot;2.3ms&quot;</span>
+  puts <span class="t">Pulsar</span>.elapsed_text(duration) <span class="c"># &quot;2.3ms&quot;</span>
 <span class="k">end</span></code></pre>
 <p>This method can be used with any <code>Time::Span</code>.</p>
+<h2><a id="asynchronous-subscribers" class="anchor" href="#asynchronous-subscribers">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Asynchronous Subscribers</h2>
+<p>Pulsar now supports asynchronous event subscribers that automatically run in a separate fiber:</p>
+<pre><code class="language-crystal"><span class="c"># Regular synchronous subscriber</span>
+<span class="t">MyEvent</span>.subscribe <span class="k">do</span> <span class="o">|</span>event<span class="o">|</span>
+  <span class="c"># This runs synchronously and can block</span>
+<span class="k">end</span>
+
+<span class="c"># Asynchronous subscriber</span>
+<span class="t">MyEvent</span>.subscribe_async <span class="k">do</span> <span class="o">|</span>event<span class="o">|</span>
+  <span class="c"># This automatically runs in a new fiber</span>
+  <span class="t">HTTP</span><span class="t">::</span><span class="t">Client</span>.post(<span class="s">&quot;https://example.com/webhook&quot;</span>, body: event.to_json)
+<span class="k">end</span>
+
+<span class="c"># Also works with timed events</span>
+<span class="t">Database</span><span class="t">::</span><span class="t">QueryEvent</span>.subscribe_async <span class="k">do</span> <span class="o">|</span>event, duration<span class="o">|</span>
+  <span class="c"># Won&#39;t block other subscribers</span>
+  send_metrics_to_monitoring_service(event.query, duration)
+<span class="k">end</span></code></pre>
+<h2><a id="error-handling" class="anchor" href="#error-handling">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Error Handling</h2>
+<p>Pulsar provides configurable error handling for subscribers:</p>
+<pre><code class="language-crystal"><span class="c"># Configure the error handling strategy</span>
+<span class="t">Pulsar</span><span class="t">::</span><span class="t">ErrorHandler</span>.strategy <span class="o">=</span> <span class="t">Pulsar</span><span class="t">::</span><span class="t">ErrorHandler</span><span class="t">::</span><span class="t">Strategy</span><span class="t">::</span><span class="t">Log</span> <span class="c"># Default</span>
+
+<span class="c"># Available strategies:</span>
+<span class="c"># - Ignore: Silently ignore errors and continue</span>
+<span class="c"># - Log: Log errors and continue (default)</span>
+<span class="c"># - Raise: Stop processing and raise the error</span>
+<span class="c"># - Custom: Use a custom error handler</span>
+
+<span class="c"># Custom error handling</span>
+<span class="t">Pulsar</span><span class="t">::</span><span class="t">ErrorHandler</span>.strategy <span class="o">=</span> <span class="t">Pulsar</span><span class="t">::</span><span class="t">ErrorHandler</span><span class="t">::</span><span class="t">Strategy</span><span class="t">::</span><span class="t">Custom</span>
+<span class="t">Pulsar</span><span class="t">::</span><span class="t">ErrorHandler</span>.custom_handler <span class="o">=</span> <span class="o">-&gt;</span>(exception, event) {
+  <span class="t">MyErrorReporter</span>.report(exception, context: {event: event.name})
+  <span class="n">nil</span>
+}</code></pre>
 <h2><a id="performance-gotchas" class="anchor" href="#performance-gotchas">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
@@ -241,7 +305,7 @@ This means that if you have a subscriber that takes a long time to run, it
 will block anything else from running.</p>
 <p>If you are doing some logging it is probably fine, but if you are doing
 something more time-intensive or failure prone like making an HTTP request or
-saving to the database you should pay special attention.</p>
+saving to the database you should use <code>subscribe_async</code> instead:</p>
 <h3><a id="example-of-a-problematic-subscriber" class="anchor" href="#example-of-a-problematic-subscriber">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
@@ -254,28 +318,29 @@ saving to the database you should pay special attention.</p>
 <span class="t">MyEvent</span>.publish
 
 puts <span class="s">&quot;I just took 5 seconds to print!&quot;</span></code></pre>
-<p>Oops. To get around this you can spawn a new fiber:</p>
-<pre><code class="language-crystal"><span class="t">MyEvent</span>.subscribe <span class="k">do</span> <span class="o">|</span>event<span class="o">|</span>
-  <span class="c"># Now the `sleep` will run in a new Fiber and will not block this one</span>
-  spawn <span class="k">do</span>
-    sleep(<span class="n">5</span>)
-  <span class="k">end</span>
+<h3><a id="solution-use-async-subscribers" class="anchor" href="#solution-use-async-subscribers">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Solution: Use async subscribers</h3>
+<pre><code class="language-crystal"><span class="t">MyEvent</span>.subscribe_async <span class="k">do</span> <span class="o">|</span>event<span class="o">|</span>
+  <span class="c"># This automatically runs in a new Fiber</span>
+  sleep(<span class="n">5</span>)
 <span class="k">end</span>
 
 <span class="t">MyEvent</span>.publish
 
 puts <span class="s">&quot;This will print right away!&quot;</span></code></pre>
-<h3><a id="potential-solutions" class="anchor" href="#potential-solutions">
+<h3><a id="alternative-solutions" class="anchor" href="#alternative-solutions">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
-</a>Potential solutions</h3>
-<p>As described above you could run long running code in a new Fiber with <code>spawn</code>.
-You could also use a background job library like https://github.com/robacarp/mosquito.</p>
+</a>Alternative solutions</h3>
+<p>You could also use a background job library like https://github.com/robacarp/mosquito.</p>
 <p>Be aware that running things in a Fiber will lose the current Fiber's context. This is
 important for logging since <code>Log.context</code> only works for the current Fiber.
 So if you plan to log using the built-in Logger, you likely <em>do not</em> want to
-spawn a new fiber. It is fast enough to just log like normal.</p>
+use async subscribers for logging. It is fast enough to just log synchronously.</p>
 <h2><a id="contributing" class="anchor" href="#contributing">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
