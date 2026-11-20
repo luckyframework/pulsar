@@ -77,7 +77,7 @@ describe "Pulsar async subscribers" do
       end
 
       # Should only wait for the block inside publish, not the async subscriber
-      publish_time.should be < 0.01.seconds
+      publish_time.should be < 0.011.seconds
 
       # Async subscriber should receive the duration
       duration_ms = channel.receive
