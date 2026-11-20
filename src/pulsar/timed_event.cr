@@ -92,9 +92,10 @@ abstract class Pulsar::TimedEvent < Pulsar::BaseEvent
 
   protected def publish(&)
     Pulsar.maybe_log_event(self)
-    start = Time.monotonic
-    result = yield
-    duration = Time.monotonic - start
+    result = nil
+    duration = Time.measure do
+      result = yield
+    end
 
     self.class.subscribers.each do |subscriber|
       begin
