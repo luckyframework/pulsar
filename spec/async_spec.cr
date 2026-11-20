@@ -26,9 +26,9 @@ describe "Pulsar async subscribers" do
         channel.send(2)
       end
 
-      start_time = Time.monotonic
-      Pulsar::AsyncTestEvent.publish
-      publish_time = Time.monotonic - start_time
+      publish_time = Time.measure do
+        Pulsar::AsyncTestEvent.publish
+      end
 
       # Publish should return immediately without waiting
       publish_time.should be < 0.005.seconds
@@ -70,11 +70,11 @@ describe "Pulsar async subscribers" do
         channel.send(duration.total_milliseconds)
       end
 
-      start_time = Time.monotonic
-      Pulsar::AsyncTestTimedEvent.publish do
-        sleep 2.milliseconds
+      publish_time = Time.measure do
+        Pulsar::AsyncTestTimedEvent.publish do
+          sleep 2.milliseconds
+        end
       end
-      publish_time = Time.monotonic - start_time
 
       # Should only wait for the block inside publish, not the async subscriber
       publish_time.should be < 0.01.seconds
