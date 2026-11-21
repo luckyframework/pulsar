@@ -17,6 +17,6 @@ abstract class Pulsar::BaseEvent
 
   # Clears any existing subscribers
   def self.clear_subscribers
-    subscribers.clear
+    reset_subscribers
   end
 end

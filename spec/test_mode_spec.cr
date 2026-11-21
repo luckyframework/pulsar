@@ -10,6 +10,9 @@ end
 class Pulsar::TimedSpecEvent < Pulsar::TimedEvent
 end
 
+class OutsideNamespaceEvent < Pulsar::Event
+end
+
 describe "Pulsar test mode" do
   describe "in memory event log" do
     it "stores events if enabled" do
@@ -39,6 +42,14 @@ describe "Pulsar test mode" do
 
       Pulsar.clear_logged_events
       Pulsar::SpecEvent.logged_events.size.should eq(0)
+    end
+
+    it "clears events defined outside of the Pulsar namespace" do
+      OutsideNamespaceEvent.publish
+      OutsideNamespaceEvent.logged_events.size.should eq(1)
+
+      Pulsar.clear_logged_events
+      OutsideNamespaceEvent.logged_events.size.should eq(0)
     end
   end
 end

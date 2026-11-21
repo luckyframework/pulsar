@@ -32,14 +32,7 @@ module Pulsar
   # Used internally to clear logged events in test mode
   def self.clear_logged_events
     Pulsar::EVENT_TYPES.each do |event_type|
-      event_type.logged_events.clear
-    end
-  end
-
-  # :nodoc:
-  def self.maybe_log_event(event : Pulsar::Event | Pulsar::TimedEvent)
-    if Pulsar.test_mode_enabled?
-      event.class.logged_events.push(event)
+      event_type.clear_logged_events
     end
   end
 
