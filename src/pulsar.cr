@@ -2,7 +2,7 @@ require "./pulsar/*"
 require "log"
 
 module Pulsar
-  VERSION     = "0.2.3"
+  VERSION     = "0.3.0"
   EVENT_TYPES = [] of Pulsar::Event.class | Pulsar::TimedEvent.class
   class_property? test_mode_enabled : Bool = false
 
