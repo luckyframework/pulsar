@@ -2,9 +2,37 @@ require "./base_event"
 
 abstract class Pulsar::Event < Pulsar::BaseEvent
   macro inherited
-    protected class_property subscribers = [] of self -> Nil
+    @@pulsar_lock = Mutex.new
+    @@logged_events = [] of self
+
     # Used by `Pulsar::SpecHelper` to test for logged events
-    class_property logged_events = [] of self
+    def self.logged_events : Array(self)
+      @@pulsar_lock.synchronize { @@logged_events.dup }
+    end
+
+    def self.clear_logged_events : Nil
+      @@pulsar_lock.synchronize { @@logged_events.clear }
+    end
+
+    private def log_event : Nil
+      @@pulsar_lock.synchronize { @@logged_events << self }
+    end
+
+    @@subscribers = [] of self -> Nil
+
+    protected def self.subscribers
+      @@subscribers
+    end
+
+    protected def self.add_subscriber(block : self -> Nil) : Nil
+      @@pulsar_lock.synchronize { @@subscribers = @@subscribers + [block] }
+    end
+
+    protected def self.reset_subscribers : Nil
+      @@pulsar_lock.synchronize do
+        @@subscribers = [] of self -> Nil
+      end
+    end
   end
 
   # Subscribe to events
@@ -17,7 +45,7 @@ abstract class Pulsar::Event < Pulsar::BaseEvent
   # MyEvent.publish # Will run the block above
   # ```
   def self.subscribe(&block : self -> Nil)
-    self.subscribers << block
+    add_subscriber(block)
   end
 
   # Subscribe to events with async execution
@@ -75,7 +103,7 @@ abstract class Pulsar::Event < Pulsar::BaseEvent
   end
 
   protected def publish
-    Pulsar.maybe_log_event(self)
+    log_event if Pulsar.test_mode_enabled?
 
     self.class.subscribers.each do |subscriber|
       begin
